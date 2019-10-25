@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Invest App",
-    "slug": "invest-app",
+    "name": "Investix",
+    "slug": "investix",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
