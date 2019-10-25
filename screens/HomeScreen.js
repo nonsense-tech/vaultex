@@ -10,6 +10,16 @@ import {
   View,
 } from 'react-native';
 
+import { SynthetixJs } from 'synthetix-js';
+const signer = new SynthetixJs.signers.PrivateKey(
+  null,
+  0,
+  '0x0123456789012345678901234567890123456789012345678901234567890123'
+);
+const snxjs = new SynthetixJs({ signer });
+console.log(snxjs);
+
+
 import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen() {
