@@ -161,7 +161,7 @@ export default class HomeScreen extends Component {
             <Row style={{ justifyContent: 'center', marginTop: 20 }}>
               <H3>YOUR ASSETS</H3>
             </Row>
-            <Col style={{ justifyContent: 'space-between', marginTop: 10 }}>
+            <Col style={{ justifyContent: 'space-between', marginTop: 20 }}>
               {this.state.loading && (
                 <Row style={{ justifyContent: 'center', alignItems: 'center', height: 183 }}>
                   <Spinner color="gray" size="small" />
@@ -172,9 +172,15 @@ export default class HomeScreen extends Component {
                   {this.state.balances.map(item => 
                     <ListItem key={item.name} style={{ marginLeft: 0, paddingLeft: 15 }}>
                       <Row style={{ justifyContent: 'space-between' }}>
-                        <Text>{item.label}</Text>
-                        <Text>{this.convert(item.balance)}</Text>
-                        <Text>${this.convert(item.dollars, 2)}</Text>
+                        <Row size={2} style={{ justifyContent: 'flex-start' }}>
+                          <Text>{item.label}</Text>
+                        </Row>
+                        <Row size={3} style={{ justifyContent: 'flex-end' }}>
+                          <Text>{this.convert(item.balance)}</Text>
+                        </Row>
+                        <Row size={3} style={{ justifyContent: 'flex-end' }}>
+                          <Text>${this.convert(item.dollars, 2)}</Text>
+                        </Row>
                       </Row>
                     </ListItem>
                   )}
