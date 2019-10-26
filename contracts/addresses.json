@@ -1,7 +1,22 @@
 {
   "synthetix": "0x22f1ba6dB6ca0A065e1b7EAe6FC22b7E675310EF",
-  "seth": "0x54c4B5cb58C880DD1734123c8b588e49eDf442Fb",
-  "susd": "0x57Ab1ec28D129707052df4dF418D58a2D46d5f51",
-  "sxau": "0xbc62e250AD0e6759FC104f09C4a7F8b83129346f",
-  "exchangeRates": "0x97315c7CaE858f6A814A9ed8616b4aF713C01035"
+  "exchangeRates": "0x97315c7CaE858f6A814A9ed8616b4aF713C01035",
+  "tokens": [
+    {
+      "name": "sETH",
+      "address": "0x54c4B5cb58C880DD1734123c8b588e49eDf442Fb"
+    },
+    {
+      "name": "sUSD",
+      "address": "0x57Ab1ec28D129707052df4dF418D58a2D46d5f51"
+    },
+    {
+      "name": "sXAU",
+      "address": "0xbc62e250AD0e6759FC104f09C4a7F8b83129346f"
+    },
+    {
+      "name": "sXAG",
+      "address": "0x0Ae5a541ea8FD2e8E3b514D8706ac26e3a30272b"
+    }
+  ]
 }

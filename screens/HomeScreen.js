@@ -16,26 +16,10 @@ const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/v
 const account = web3.eth.accounts.privateKeyToAccount('0x697F36CEDBD6767265A15B938E7D246DCF4941574A0F12C2C36882A4992FBD9E');
 web3.eth.accounts.wallet.add(account);
 
-const SETH = new web3.eth.Contract(Token, addresses.seth);
-const SUSD = new web3.eth.Contract(Token, addresses.susd);
-const SXAU = new web3.eth.Contract(Token, addresses.sxau);
 const SynthetixContract = new web3.eth.Contract(Synthetix, addresses.synthetix);
 const ExchangeRatesContract = new web3.eth.Contract(ExchangeRates, addresses.exchangeRates);
 
-const currencies = [
-  {
-    label: 'sETH',
-    value: 'sETH',
-  },
-  {
-    label: 'sUSD',
-    value: 'sUSD',
-  },
-  {
-    label: 'sXAU',
-    value: 'sXAU',
-  },
-];
+const currencies = addresses.tokens.map(item => ({ label: item.name, value: item.name }));
 
 const Picker = ({ value, onChange }) => (
   <RNPickerSelect
@@ -57,9 +41,7 @@ const Picker = ({ value, onChange }) => (
 
 export default class HomeScreen extends Component {
   state = {
-    sethBalance: '0',
-    susdBalance: '0',
-    sxauBalance: '0',
+    balances: addresses.tokens.map(item => ({ name: item.name, balance: '0' })),
     from: 'sETH',
     to: 'sUSD',
     fromAmount: '0',
@@ -71,16 +53,15 @@ export default class HomeScreen extends Component {
     this.loadRates();
   }
   loadBalances = async () => {
-    const [sethBalance, susdBalance, sxauBalance] = await Promise.all([
-      SETH.methods.balanceOf(account.address).call(),
-      SUSD.methods.balanceOf(account.address).call(),
-      SXAU.methods.balanceOf(account.address).call(),
-    ]);
-    this.setState({
-      sethBalance: sethBalance,
-      susdBalance: susdBalance,
-      sxauBalance: sxauBalance,
-    });
+    const balances = await Promise.all(addresses.tokens.map(async item => {
+      const contract = new web3.eth.Contract(Token, item.address);
+      const balance = await contract.methods.balanceOf(account.address).call();
+      return {
+        name: item.name,
+        balance,
+      };
+    }));
+    this.setState({ balances });
   }
   loadRates = async () => {
     const rates = {};
@@ -125,12 +106,12 @@ export default class HomeScreen extends Component {
     this.setState({ toAmount: value });
     this.updateFromAmount(value);
   }
-  onFromChange = value => {
-    this.setState({ from: value });
-    this.updateToAmount(this.state.toAmount);
+  onFromChange = async value => {
+    await this.setState({ from: value });
+    this.updateToAmount(this.state.fromAmount);
   }
-  onToChange = value => {
-    this.setState({ to: value });
+  onToChange = async value => {
+    await this.setState({ to: value });
     this.updateToAmount(this.state.fromAmount);
   }
   convert = value => {
@@ -155,9 +136,9 @@ export default class HomeScreen extends Component {
         <Content padder>
           <Grid>
             <Col>
-              <Text>sETH: {this.convert(this.state.sethBalance)}</Text>
-              <Text>sUSD: {this.convert(this.state.susdBalance)}</Text>
-              <Text>sXAU: {this.convert(this.state.sxauBalance)}</Text>
+              {this.state.balances.map(item => 
+                <Text>{item.name}: {this.convert(item.balance)}</Text>
+              )}
             </Col>
           </Grid>
           <Grid style={{ marginTop: 20 }}>
