@@ -94,7 +94,7 @@ export default class HomeScreen extends Component {
     }));
     this.setState({ rates });
   }
-  swap = async () => {
+  exchange = async () => {
     await SynthetixContract.methods.exchange(
       toHex(this.state.from),
       toWei(this.state.fromAmount),
@@ -126,8 +126,8 @@ export default class HomeScreen extends Component {
     this.updateFromAmount(value);
   }
   onFromChange = value => {
-    this.setState({ fromAmount: '0', from: value });
-    this.updateToAmount('0');
+    this.setState({ from: value });
+    this.updateToAmount(this.state.toAmount);
   }
   onToChange = value => {
     this.setState({ to: value });
@@ -135,6 +135,14 @@ export default class HomeScreen extends Component {
   }
   convert = value => {
     return Number(Number(fromWei(value)).toFixed(6)).toString();
+  }
+  swap = () => {
+    this.setState({
+      from: this.state.to,
+      to: this.state.from,
+      fromAmount: this.state.toAmount,
+      toAmount: this.state.fromAmount,
+    });
   }
   render() {
     return (
@@ -158,7 +166,7 @@ export default class HomeScreen extends Component {
                 <Picker value={this.state.from} onChange={this.onFromChange} />
               </Col>
               <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Icon type='Ionicons' name='arrow-round-forward' style={{ fontSize: 40 }} />
+                <Icon type='Ionicons' name='arrow-round-forward' style={{ fontSize: 40 }} onPress={this.swap} />
               </Col>
               <Col>
                 <Picker value={this.state.to} onChange={this.onToChange} />
@@ -182,8 +190,8 @@ export default class HomeScreen extends Component {
               </Col>
             </Row>
           </Grid>
-          <Button block style={{ marginTop: 20 }} onPress={this.swap}>
-            <Text>Swap</Text>
+          <Button block style={{ marginTop: 20 }} onPress={this.exchange}>
+            <Text>Exchange</Text>
           </Button>
         </Content>
       </Container>
