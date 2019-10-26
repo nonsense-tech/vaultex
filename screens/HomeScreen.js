@@ -182,14 +182,14 @@ export default class HomeScreen extends Component {
               )}
               <Col style={{ marginTop: 100 }}>
                 <Row>
-                  <Col>
+                  <Col size={2}>
                     <Picker value={this.state.from} onChange={this.onFromChange} />
                     <CustomInput value={this.state.fromAmount} onChange={this.onFromAmountChange} />
                   </Col>
-                  <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
+                  <Col size={1} style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <Icon type='Ionicons' name='arrow-round-forward' style={{ fontSize: 40 }} onPress={this.swap} />
                   </Col>
-                  <Col>
+                  <Col size={2}>
                     <Picker value={this.state.to} onChange={this.onToChange} />
                     <CustomInput value={this.state.toAmount} onChange={this.onToAmountChange} />
                   </Col>
@@ -222,7 +222,7 @@ const inputStyles = {
     borderColor: 'gray',
     borderRadius: 4,
     color: 'black',
-    paddingRight: 30,
+    textAlign: 'center',
 };
 
 const styles = StyleSheet.create({
