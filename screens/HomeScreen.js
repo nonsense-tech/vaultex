@@ -1,7 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3 } from 'native-base';
+import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3, Spinner } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Web3 from 'web3';
@@ -58,12 +58,16 @@ export default class HomeScreen extends Component {
     fromAmount: '0',
     rates: {},
     toAmount: '0',
+    loading: false,
+    sending: false,
   }
   async componentDidMount() {
+    this.setState({ loading: true });
     await this.loadRates();
     await this.loadBalances();
   }
   loadBalances = async () => {
+    this.setState({ loading: true });
     const balances = await Promise.all(addresses.tokens.map(async item => {
       const contract = new web3.eth.Contract(Token, item.address);
       const balance = await contract.methods.balanceOf(account.address).call();
@@ -74,7 +78,7 @@ export default class HomeScreen extends Component {
         dollars: new BN(balance).mul(new BN(this.state.rates[item.name])).div(new BN(toWei('1'))),
       };
     }));
-    this.setState({ balances });
+    this.setState({ balances, loading: false });
   }
   loadRates = async () => {
     const rates = {};
@@ -89,12 +93,18 @@ export default class HomeScreen extends Component {
     this.setState({ rates });
   }
   exchange = async () => {
+    this.setState({ sending: true });
     await SynthetixContract.methods.exchange(
       toHex(this.state.from),
       toWei(this.state.fromAmount),
       toHex(this.state.to),
       account.address
     ).send({ from: account.address, gas: 1000000, gasPrice: 1000000000 });
+    this.setState({
+      sending: false,
+      fromAmount: '0',
+      toAmount: '0',
+    });
     await this.loadBalances();
   }
   calculateAmount = (amount, from, to) => {
@@ -152,17 +162,24 @@ export default class HomeScreen extends Component {
               <H3>YOUR ASSETS</H3>
             </Row>
             <Col style={{ justifyContent: 'space-between', marginTop: 10 }}>
-              <List>
-                {this.state.balances.map(item => 
-                  <ListItem key={item.name} style={{ marginLeft: 0, paddingLeft: 15 }}>
-                    <Row style={{ justifyContent: 'space-between' }}>
-                      <Text>{item.label}</Text>
-                      <Text>{this.convert(item.balance)}</Text>
-                      <Text>${this.convert(item.dollars, 2)}</Text>
-                    </Row>
-                  </ListItem>
-                )}
-              </List>
+              {this.state.loading && (
+                <Row style={{ justifyContent: 'center', alignItems: 'center', height: 183 }}>
+                  <Spinner color="gray" size="small" />
+                </Row>
+              )}
+              {!this.state.loading && ( 
+                <List>
+                  {this.state.balances.map(item => 
+                    <ListItem key={item.name} style={{ marginLeft: 0, paddingLeft: 15 }}>
+                      <Row style={{ justifyContent: 'space-between' }}>
+                        <Text>{item.label}</Text>
+                        <Text>{this.convert(item.balance)}</Text>
+                        <Text>${this.convert(item.dollars, 2)}</Text>
+                      </Row>
+                    </ListItem>
+                  )}
+                </List>
+              )}
               <Col style={{ marginTop: 100 }}>
                 <Row>
                   <Col>
@@ -177,8 +194,12 @@ export default class HomeScreen extends Component {
                     <CustomInput value={this.state.toAmount} onChange={this.onToAmountChange} />
                   </Col>
                 </Row>
-                <Button block style={{ marginTop: 20 }} onPress={this.exchange}>
-                  <Text>Exchange</Text>
+                <Button block style={{ marginTop: 20 }} onPress={this.exchange} disabled={this.state.sending}>
+                  {this.state.sending ? (
+                    <Spinner color="gray" size="small" />
+                  ) : (
+                    <Text>Exchange</Text>
+                  )}
                 </Button>
               </Col>
             </Col>
