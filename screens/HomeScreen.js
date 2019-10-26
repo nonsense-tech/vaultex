@@ -19,7 +19,7 @@ web3.eth.accounts.wallet.add(account);
 const SynthetixContract = new web3.eth.Contract(Synthetix, addresses.synthetix);
 const ExchangeRatesContract = new web3.eth.Contract(ExchangeRates, addresses.exchangeRates);
 
-const currencies = addresses.tokens.map(item => ({ label: item.name, value: item.name }));
+const currencies = addresses.tokens.map(item => ({ label: item.label, value: item.name }));
 
 const Picker = ({ value, onChange }) => (
   <RNPickerSelect
@@ -53,8 +53,8 @@ const CustomInput = ({ value, onChange }) => (
 export default class HomeScreen extends Component {
   state = {
     balances: addresses.tokens.map(item => ({ name: item.name, balance: '0', dollars: '0' })),
-    from: 'sETH',
-    to: 'sUSD',
+    from: 'sUSD',
+    to: 'sXAU',
     fromAmount: '0',
     rates: {},
     toAmount: '0',
@@ -69,6 +69,7 @@ export default class HomeScreen extends Component {
       const balance = await contract.methods.balanceOf(account.address).call();
       return {
         name: item.name,
+        label: item.label,
         balance,
         dollars: new BN(balance).mul(new BN(this.state.rates[item.name])).div(new BN(toWei('1'))),
       };
@@ -153,9 +154,9 @@ export default class HomeScreen extends Component {
             <Col style={{ justifyContent: 'space-between', marginTop: 10 }}>
               <List>
                 {this.state.balances.map(item => 
-                  <ListItem style={{ marginLeft: 0, paddingLeft: 15 }}>
-                    <Row key={item.name} style={{ justifyContent: 'space-between' }}>
-                      <Text>{item.name}</Text>
+                  <ListItem key={item.name} style={{ marginLeft: 0, paddingLeft: 15 }}>
+                    <Row style={{ justifyContent: 'space-between' }}>
+                      <Text>{item.label}</Text>
                       <Text>{this.convert(item.balance)}</Text>
                       <Text>${this.convert(item.dollars, 2)}</Text>
                     </Row>
