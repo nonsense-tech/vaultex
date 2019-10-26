@@ -52,16 +52,16 @@ const CustomInput = ({ value, onChange }) => (
 
 export default class HomeScreen extends Component {
   state = {
-    balances: addresses.tokens.map(item => ({ name: item.name, balance: '0' })),
+    balances: addresses.tokens.map(item => ({ name: item.name, balance: '0', dollars: '0' })),
     from: 'sETH',
     to: 'sUSD',
     fromAmount: '0',
     rates: {},
     toAmount: '0',
   }
-  componentDidMount() {
-    this.loadBalances();
-    this.loadRates();
+  async componentDidMount() {
+    await this.loadRates();
+    await this.loadBalances();
   }
   loadBalances = async () => {
     const balances = await Promise.all(addresses.tokens.map(async item => {
@@ -70,6 +70,7 @@ export default class HomeScreen extends Component {
       return {
         name: item.name,
         balance,
+        dollars: new BN(balance).mul(new BN(this.state.rates[item.name])).div(new BN(toWei('1'))),
       };
     }));
     this.setState({ balances });
@@ -125,8 +126,8 @@ export default class HomeScreen extends Component {
     await this.setState({ to: value });
     this.updateToAmount(this.state.fromAmount);
   }
-  convert = value => {
-    return Number(Number(fromWei(value)).toFixed(6)).toString();
+  convert = (value, decimals = 6) => {
+    return Number(fromWei(value)).toFixed(decimals);
   }
   swap = () => {
     this.setState({
@@ -153,9 +154,10 @@ export default class HomeScreen extends Component {
               <List>
                 {this.state.balances.map(item => 
                   <ListItem style={{ marginLeft: 0, paddingLeft: 15 }}>
-                    <Row style={{ justifyContent: 'space-between' }}>
-                      <Text key={item.name}>{item.name}</Text>
-                      <Text key={item.name + 1}>{this.convert(item.balance)}</Text>
+                    <Row key={item.name} style={{ justifyContent: 'space-between' }}>
+                      <Text>{item.name}</Text>
+                      <Text>{this.convert(item.balance)}</Text>
+                      <Text>${this.convert(item.dollars, 2)}</Text>
                     </Row>
                   </ListItem>
                 )}
