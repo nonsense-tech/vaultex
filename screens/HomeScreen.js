@@ -108,10 +108,10 @@ export default class HomeScreen extends Component {
     await this.loadBalances();
   }
   calculateAmount = (amount, from, to) => {
-    const amountToSwap = new BN(toWei(amount || '0'));
+    const amountToSwap = new BN(toWei(Number(amount) ? amount : '0'));
     const fromRate = new BN(this.state.rates[from]);
     const toRate = new BN(this.state.rates[to]);
-    return this.convert(amountToSwap.mul(fromRate).div(toRate));
+    return Number(this.convert(amountToSwap.mul(fromRate).div(toRate))).toString();
   }
   updateToAmount = amount => {
     const toAmount = this.calculateAmount(amount, this.state.from, this.state.to);
