@@ -27,7 +27,7 @@ const Picker = ({ value, onChange }) => (
     items={currencies}
     onValueChange={onChange}
     style={{
-      ...pickerSelectStyles,
+      ...styles,
       iconContainer: {
         top: 10,
         right: 12,
@@ -37,6 +37,17 @@ const Picker = ({ value, onChange }) => (
     useNativeAndroidPickerStyle={false}
     textInputProps={{ underlineColor: 'yellow' }}
   />
+);
+
+const CustomInput = ({ value, onChange }) => (
+  <Item regular style={{ ...styles.inputContainer }}>
+    <Input
+      style={{ ...styles.input }}
+      keyboardType="decimal-pad"
+      value={value}
+      onChangeText={onChange}
+    />
+  </Item>
 );
 
 export default class HomeScreen extends Component {
@@ -137,7 +148,7 @@ export default class HomeScreen extends Component {
           <Grid>
             <Col>
               {this.state.balances.map(item => 
-                <Text>{item.name}: {this.convert(item.balance)}</Text>
+                <Text key={item.name}>{item.name}: {this.convert(item.balance)}</Text>
               )}
             </Col>
           </Grid>
@@ -145,29 +156,14 @@ export default class HomeScreen extends Component {
             <Row>
               <Col>
                 <Picker value={this.state.from} onChange={this.onFromChange} />
+                <CustomInput value={this.state.fromAmount} onChange={this.onFromAmountChange} />
               </Col>
               <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Icon type='Ionicons' name='arrow-round-forward' style={{ fontSize: 40 }} onPress={this.swap} />
               </Col>
               <Col>
                 <Picker value={this.state.to} onChange={this.onToChange} />
-              </Col>
-            </Row>
-          </Grid>
-          <Grid style={{ marginTop: 20 }}>
-            <Row>
-              <Col>
-                <Item regular>
-                  <Input keyboardType="decimal-pad" value={this.state.fromAmount} onChangeText={this.onFromAmountChange} />
-                </Item>
-              </Col>
-              <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Icon type='Ionicons' name='menu' style={{ fontSize: 40 }} />
-              </Col>
-              <Col>
-                <Item regular>
-                  <Input keyboardType="decimal-pad" value={this.state.toAmount} onChangeText={this.onToAmountChange} />
-                </Item>
+                <CustomInput value={this.state.toAmount} onChange={this.onToAmountChange} />
               </Col>
             </Row>
           </Grid>
@@ -184,8 +180,7 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
+const inputStyles = {
     fontSize: 16,
     paddingVertical: 12,
     paddingHorizontal: 10,
@@ -193,16 +188,18 @@ const pickerSelectStyles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 4,
     color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
+    paddingRight: 30,
+};
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    marginTop: 10,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    borderLeftWidth: 0,
   },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: 'purple',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
-  },
+  input: inputStyles,
+  inputIOS: inputStyles,
+  inputAndroid: inputStyles,
 });
