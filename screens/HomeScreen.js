@@ -1,7 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
-import { Text, Button, Container, Header, Content, Body, Icon, Input, Item } from 'native-base';
+import { StyleSheet, Dimensions } from 'react-native';
+import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3 } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Web3 from 'web3';
@@ -138,38 +138,48 @@ export default class HomeScreen extends Component {
   }
   render() {
     return (
-      <Container>
+      <Container style={{ height: Dimensions.get("window").height }}>
         <Header>
           <Body>
             <Text>Investix</Text>
           </Body>
         </Header>
-        <Content padder>
-          <Grid>
-            <Col>
-              {this.state.balances.map(item => 
-                <Text key={item.name}>{item.name}: {this.convert(item.balance)}</Text>
-              )}
+        <Content padder style={{ flex: 1 }}>
+          <Grid style={{ flex: 1 }}>
+            <Row style={{ justifyContent: 'center', marginTop: 20 }}>
+              <H3>YOUR ASSETS</H3>
+            </Row>
+            <Col style={{ justifyContent: 'space-between', marginTop: 10 }}>
+              <List>
+                {this.state.balances.map(item => 
+                  <ListItem style={{ marginLeft: 0, paddingLeft: 15 }}>
+                    <Row style={{ justifyContent: 'space-between' }}>
+                      <Text key={item.name}>{item.name}</Text>
+                      <Text key={item.name + 1}>{this.convert(item.balance)}</Text>
+                    </Row>
+                  </ListItem>
+                )}
+              </List>
+              <Col style={{ marginTop: 100 }}>
+                <Row>
+                  <Col>
+                    <Picker value={this.state.from} onChange={this.onFromChange} />
+                    <CustomInput value={this.state.fromAmount} onChange={this.onFromAmountChange} />
+                  </Col>
+                  <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Icon type='Ionicons' name='arrow-round-forward' style={{ fontSize: 40 }} onPress={this.swap} />
+                  </Col>
+                  <Col>
+                    <Picker value={this.state.to} onChange={this.onToChange} />
+                    <CustomInput value={this.state.toAmount} onChange={this.onToAmountChange} />
+                  </Col>
+                </Row>
+                <Button block style={{ marginTop: 20 }} onPress={this.exchange}>
+                  <Text>Exchange</Text>
+                </Button>
+              </Col>
             </Col>
           </Grid>
-          <Grid style={{ marginTop: 20 }}>
-            <Row>
-              <Col>
-                <Picker value={this.state.from} onChange={this.onFromChange} />
-                <CustomInput value={this.state.fromAmount} onChange={this.onFromAmountChange} />
-              </Col>
-              <Col style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Icon type='Ionicons' name='arrow-round-forward' style={{ fontSize: 40 }} onPress={this.swap} />
-              </Col>
-              <Col>
-                <Picker value={this.state.to} onChange={this.onToChange} />
-                <CustomInput value={this.state.toAmount} onChange={this.onToAmountChange} />
-              </Col>
-            </Row>
-          </Grid>
-          <Button block style={{ marginTop: 20 }} onPress={this.exchange}>
-            <Text>Exchange</Text>
-          </Button>
         </Content>
       </Container>
     );
