@@ -153,7 +153,7 @@ export default class HomeScreen extends Component {
       <Container style={{ height: Dimensions.get("window").height }}>
         <Header>
           <Body>
-            <Text>Investix</Text>
+            <Text style={{ fontWeight: 'bold' }}>{'< VAULTEX >'}</Text>
           </Body>
         </Header>
         <Content padder style={{ flex: 1 }}>

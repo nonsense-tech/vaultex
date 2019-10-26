@@ -17,7 +17,7 @@ export default class DepositScreen extends Component {
       <Container>
         <Header>
           <Body>
-            <Text>Investix</Text>
+            <Text style={{ fontWeight: 'bold' }}>{'< VAULTEX >'}</Text>
           </Body>
         </Header>
         <Content padder>
