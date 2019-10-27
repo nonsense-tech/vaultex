@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Alert } from 'react-native';
 import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3, Spinner } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -91,6 +91,20 @@ export default class HomeScreen extends Component {
       rates[item.value] = rate;
     }));
     this.setState({ rates });
+  }
+  onButtonPress = () => {
+    if (!Number(this.state.fromAmount)) {
+      Alert.alert('Error', 'Please, specify the amount to exchange');
+      return;
+    }
+    Alert.alert(
+      'Confirmation',
+      'Please, confirm the transaction',
+      [
+        { text: 'Cancel', style: 'destructive' },
+        { text: 'Confirm', onPress: this.exchange },
+      ]
+    );
   }
   exchange = async () => {
     this.setState({ sending: true });
@@ -200,7 +214,7 @@ export default class HomeScreen extends Component {
                     <CustomInput value={this.state.toAmount} onChange={this.onToAmountChange} />
                   </Col>
                 </Row>
-                <Button block style={{ marginTop: 20 }} onPress={this.exchange} disabled={this.state.sending}>
+                <Button block style={{ marginTop: 20 }} onPress={this.onButtonPress} disabled={this.state.sending}>
                   {this.state.sending ? (
                     <Spinner color="gray" size="small" />
                   ) : (
