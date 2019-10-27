@@ -40,7 +40,7 @@ export default class DepositScreen extends Component {
           {this.state.depositWay === 'crypto' && (
             <Col>
               <Text style={{ textAlign: 'center', color: '#4f4f4f' }}>
-                Send ETH to the next address and it will back you USD tokens
+                Send ETH to the following address and it will send you USD tokens back
               </Text>
               <Text
                 style={{ textAlign: 'center', fontWeight: 'bold', marginTop: 20 }}
