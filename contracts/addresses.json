@@ -16,11 +16,6 @@
       "label": "SILVER",
       "name": "sXAG",
       "address": "0x0Ae5a541ea8FD2e8E3b514D8706ac26e3a30272b"
-    },
-    {
-      "label": "ETH",
-      "name": "sETH",
-      "address": "0x54c4B5cb58C880DD1734123c8b588e49eDf442Fb"
     }
   ],
   "uniswapExchanger": "0x3e3e9c345bf73d0d32189d8b530244dbc877def1"

@@ -193,7 +193,7 @@ export default class HomeScreen extends Component {
             </Row>
             <Col style={{ justifyContent: 'space-between', marginTop: 20 }}>
               {this.state.loading && (
-                <Row style={{ justifyContent: 'center', alignItems: 'center', height: 183 }}>
+                <Row style={{ justifyContent: 'center', alignItems: 'center', height: 138 }}>
                   <Spinner color="gray" size="small" />
                 </Row>
               )}
@@ -216,7 +216,7 @@ export default class HomeScreen extends Component {
                   )}
                 </List>
               )}
-              <Col style={{ marginTop: 100 }}>
+              <Col style={{ marginTop: 150 }}>
                 <Row>
                   <Col size={2}>
                     <Picker value={this.state.from} onChange={this.onFromChange} />
