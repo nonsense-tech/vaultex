@@ -41,6 +41,8 @@ const Picker = ({ value, onChange }) => (
 const CustomInput = ({ value, onChange }) => (
   <Item regular style={{ ...styles.inputContainer }}>
     <Input
+      placeholder="amount"
+      placeholderTextColor="#d1d1d1" 
       style={{ ...styles.input }}
       keyboardType="decimal-pad"
       value={value}
@@ -54,9 +56,9 @@ export default class HomeScreen extends Component {
     balances: addresses.tokens.map(item => ({ name: item.name, balance: '0', dollars: '0' })),
     from: 'sUSD',
     to: 'sXAU',
-    fromAmount: '0',
+    fromAmount: '',
     rates: {},
-    toAmount: '0',
+    toAmount: '',
     loading: false,
     sending: false,
   }
@@ -115,12 +117,13 @@ export default class HomeScreen extends Component {
     ).send({ from: account.address, gas: 1000000, gasPrice: 1000000000 });
     this.setState({
       sending: false,
-      fromAmount: '0',
-      toAmount: '0',
+      fromAmount: '',
+      toAmount: '',
     });
     await this.loadBalances();
   }
   calculateAmount = (amount, from, to) => {
+    if (!amount) return '';
     const amountToSwap = new BN(toWei(Number(amount) ? amount : '0'));
     const fromRate = new BN(this.state.rates[from]);
     const toRate = new BN(this.state.rates[to]);
@@ -242,6 +245,7 @@ const inputStyles = {
     borderRadius: 4,
     color: 'black',
     textAlign: 'center',
+    height: 40,
 };
 
 const styles = StyleSheet.create({
@@ -251,6 +255,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     borderRightWidth: 0,
     borderLeftWidth: 0,
+    marginLeft: 0,
   },
   input: inputStyles,
   inputIOS: inputStyles,
