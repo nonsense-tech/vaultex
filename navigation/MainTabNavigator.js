@@ -70,7 +70,7 @@ DepositStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   DepositStack,
-  WyreStack,
+  // WyreStack,
 });
 
 tabNavigator.path = '';
