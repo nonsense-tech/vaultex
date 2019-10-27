@@ -1,4 +1,3 @@
-import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions, Alert } from 'react-native';
 import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3, Spinner } from 'native-base';

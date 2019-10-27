@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Clipboard } from 'react-native';
-import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3, Toast } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Text, Button, Container, Header, Content, Body, Icon, Toast } from 'native-base';
+import { Col } from 'react-native-easy-grid';
 import { WebView } from 'react-native-webview';
 
 import addresses from '../contracts/addresses.json';

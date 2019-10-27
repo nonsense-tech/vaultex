@@ -4,7 +4,6 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import WyreScreen from '../screens/WyreScreen';
 import DepositScreen from '../screens/DepositScreen';
 
 const config = Platform.select({
@@ -35,22 +34,6 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = '';
 
-const WyreStack = createStackNavigator(
-  {
-    Wyre: WyreScreen,
-  },
-  config
-);
-
-WyreStack.navigationOptions = {
-  tabBarLabel: 'Wyre',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
-};
-
-WyreStack.path = '';
-
 const DepositStack = createStackNavigator(
   {
     Settings: DepositScreen,
@@ -70,7 +53,6 @@ DepositStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   DepositStack,
-  // WyreStack,
 });
 
 tabNavigator.path = '';
