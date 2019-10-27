@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { Clipboard } from 'react-native';
 import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import { WebView } from 'react-native-webview';
 
 import addresses from '../contracts/addresses.json';
+
+const wyreLink = 'https://pay.sendwyre.com/purchase?destCurrency=ETH&sourceAmount=1&dest=0x79DF43B54c31c72a3d93465bdf72317C751822B3&paymentMethod=google-pay';
 
 export default class DepositScreen extends Component {
   state = {
@@ -55,10 +58,11 @@ export default class DepositScreen extends Component {
             </Col>
           )}
           {this.state.depositWay === 'card' && (
-            <Col>
-              <Text style={{ textAlign: 'center' }}>
-                Not implemented yet
-              </Text>
+            <Col> 
+              <WebView
+                source={{ uri: wyreLink }}
+                style={{ height: 440 }}
+              />
               <Button block style={{ marginTop: 20 }} onPress={() => this.chooseDepositWay(null)}>
                 <Text>Cancel</Text>
               </Button>
