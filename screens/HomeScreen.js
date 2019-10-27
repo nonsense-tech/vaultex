@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions, Alert, View } from 'react-native';
-import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, Spinner } from 'native-base';
+import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, Spinner, Right, Left } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Web3 from 'web3';
@@ -168,9 +168,20 @@ export default class HomeScreen extends Component {
     return (
       <Container style={{ height: Dimensions.get("window").height }}>
         <Header>
+          <Left />
           <Body>
-            <Text style={{ fontWeight: 'bold', color: '#007aff' }}>{'< V A U L T E X >'}</Text>
+            <Text style={{ fontWeight: 'bold', color: '#007aff', width: 150, textAlign: 'center' }}>{'< V A U L T E X >'}</Text>
           </Body>
+          <Right>
+            <Button transparent onPress={() => { this.loadBalances(); this.loadRates(); }}>
+              <Icon
+                type='Ionicons'
+                name='refresh'
+                style={{ color: '#007aff', fontSize: 20, marginRight: 15 }}
+              />
+            </Button>
+            
+          </Right>
         </Header>
         <Content padder style={{ flex: 1 }}>
           <Grid style={{ flex: 1 }}>
