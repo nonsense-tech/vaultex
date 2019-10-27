@@ -12,7 +12,7 @@ import Synthetix from '../contracts/abis/Synthetix.json';
 import ExchangeRates from '../contracts/abis/ExchangeRates.json';
 
 const web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io/v3/c3725848586d482c91bba79cd74ca84a'));
-const account = web3.eth.accounts.privateKeyToAccount('0x697F36CEDBD6767265A15B938E7D246DCF4941574A0F12C2C36882A4992FBD9E');
+const account = web3.eth.accounts.privateKeyToAccount('0xDF01B4DFCCA790C6695FB2BFC83925B2CD9C34C3D194DC5B20C0003E42C444BD');
 web3.eth.accounts.wallet.add(account);
 
 const SynthetixContract = new web3.eth.Contract(Synthetix, addresses.synthetix);
