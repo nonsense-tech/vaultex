@@ -20,13 +20,13 @@ export default class DepositScreen extends Component {
       <Container>
         <Header>
           <Body>
-            <Text style={{ fontWeight: 'bold' }}>{'< VAULTEX >'}</Text>
+            <Text style={{ fontWeight: 'bold', color: '#007aff' }}>{'< VAULTEX >'}</Text>
           </Body>
         </Header>
         <Content padder style={{ paddingTop: 20 }}>
           {!this.state.depositWay && (
             <Col>
-              <Text style={{ textAlign: 'center' }}>
+              <Text style={{ textAlign: 'center', color: '#4f4f4f' }}>
                 Choose the way to deposit
               </Text>
               <Button block style={{ marginTop: 20 }} onPress={() => this.chooseDepositWay('crypto')}>
@@ -39,7 +39,7 @@ export default class DepositScreen extends Component {
           )}
           {this.state.depositWay === 'crypto' && (
             <Col>
-              <Text style={{ textAlign: 'center' }}>
+              <Text style={{ textAlign: 'center', color: '#4f4f4f' }}>
                 Send ETH to the next address and it will back you USD tokens
               </Text>
               <Text

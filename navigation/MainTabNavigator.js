@@ -19,14 +19,14 @@ const HomeStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Wallet',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
+          ? `ios-wallet`
+          : 'md-wallet'
       }
     />
   ),
@@ -44,7 +44,7 @@ const DepositStack = createStackNavigator(
 DepositStack.navigationOptions = {
   tabBarLabel: 'Deposit',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-code-download' : 'md-code-download'} />
   ),
 };
 

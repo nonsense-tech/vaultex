@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions, Alert } from 'react-native';
-import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, H3, Spinner } from 'native-base';
+import { StyleSheet, Dimensions, Alert, View } from 'react-native';
+import { Text, Button, Container, Header, Content, Body, Icon, Input, Item, List, ListItem, Spinner } from 'native-base';
 import RNPickerSelect from 'react-native-picker-select';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Web3 from 'web3';
@@ -42,7 +42,7 @@ const CustomInput = ({ value, onChange }) => (
   <Item regular style={{ ...styles.inputContainer }}>
     <Input
       placeholder="amount"
-      placeholderTextColor="#d1d1d1" 
+      placeholderTextColor="#8cc4ff" 
       style={{ ...styles.input }}
       keyboardType="decimal-pad"
       value={value}
@@ -169,13 +169,27 @@ export default class HomeScreen extends Component {
       <Container style={{ height: Dimensions.get("window").height }}>
         <Header>
           <Body>
-            <Text style={{ fontWeight: 'bold' }}>{'< VAULTEX >'}</Text>
+            <Text style={{ fontWeight: 'bold', color: '#007aff' }}>{'< VAULTEX >'}</Text>
           </Body>
         </Header>
         <Content padder style={{ flex: 1 }}>
           <Grid style={{ flex: 1 }}>
-            <Row style={{ justifyContent: 'center', marginTop: 20 }}>
-              <H3>YOUR ASSETS</H3>
+            <Row
+              style={{
+                justifyContent: 'center',
+                marginTop: 20,
+              }}
+            >
+            <View style={{ borderBottomWidth: 1, borderBottomColor: '#007aff' }}>
+            <Text style={{
+                fontSize: 18,
+                paddingVertical: 5,
+                paddingHorizontal: 15,
+                color: '#4f4f4f'
+              }}
+              >YOUR ASSETS</Text>
+            </View>
+            
             </Row>
             <Col style={{ justifyContent: 'space-between', marginTop: 20 }}>
               {this.state.loading && (
@@ -189,13 +203,13 @@ export default class HomeScreen extends Component {
                     <ListItem key={item.name} style={{ marginLeft: 0, paddingLeft: 15 }}>
                       <Row style={{ justifyContent: 'space-between' }}>
                         <Row size={2} style={{ justifyContent: 'flex-start' }}>
-                          <Text>{item.label}</Text>
+                          <Text style={{ color: '#4f4f4f' }}>{item.label}</Text>
                         </Row>
                         <Row size={3} style={{ justifyContent: 'flex-end' }}>
-                          <Text>{this.convert(item.balance)}</Text>
+                          <Text style={{ color: '#4f4f4f' }}>{this.convert(item.balance)}</Text>
                         </Row>
                         <Row size={3} style={{ justifyContent: 'flex-end' }}>
-                          <Text>${this.convert(item.dollars, 2)}</Text>
+                          <Text style={{ color: '#4f4f4f' }}>${this.convert(item.dollars, 2)}</Text>
                         </Row>
                       </Row>
                     </ListItem>
@@ -209,7 +223,12 @@ export default class HomeScreen extends Component {
                     <CustomInput value={this.state.fromAmount} onChange={this.onFromAmountChange} />
                   </Col>
                   <Col size={1} style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Icon type='Ionicons' name='arrow-round-forward' style={{ fontSize: 40 }} onPress={this.swap} />
+                    <Icon
+                      type='Ionicons'
+                      name='arrow-round-forward'
+                      style={{ fontSize: 40, color: '#007aff' }}
+                      onPress={this.swap}
+                    />
                   </Col>
                   <Col size={2}>
                     <Picker value={this.state.to} onChange={this.onToChange} />
@@ -241,9 +260,9 @@ const inputStyles = {
     paddingVertical: 12,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#007aff',
     borderRadius: 4,
-    color: 'black',
+    color: '#007aff',
     textAlign: 'center',
     height: 40,
 };
