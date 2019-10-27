@@ -20,7 +20,7 @@ export default class DepositScreen extends Component {
       <Container>
         <Header>
           <Body>
-            <Text style={{ fontWeight: 'bold', color: '#007aff' }}>{'< VAULTEX >'}</Text>
+            <Text style={{ fontWeight: 'bold', color: '#007aff' }}>{'< V A U L T E X >'}</Text>
           </Body>
         </Header>
         <Content padder style={{ paddingTop: 20 }}>
